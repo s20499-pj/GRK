@@ -34,3 +34,9 @@
 # Directory with .blend
 lab1/
 lab2/
+
+#IDE
+.idea/
+*~
+\#*\#
+.\#*
