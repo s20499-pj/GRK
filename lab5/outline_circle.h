@@ -1,14 +1,18 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#ifndef OUTLINE_CIRCLE_H
+#define OUTLINE_CIRCLE_H
 
 #include <GL/glew.h>
 #include "program.h"
 
-class Triangle {
+class OutlineCircle {
 public:
     void Initialize();
 
-    ~Triangle();
+    void FindPixels(int r);
+
+    void write_pixel(int x, int y, int offset);
+
+    ~OutlineCircle();
 
     void Draw(const Program &program);
 
@@ -18,4 +22,4 @@ private:
     GLuint color_buffer_;
 };
 
-#endif
+#endif // OUTLINE_CIRCLE_H

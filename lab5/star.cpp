@@ -1,19 +1,36 @@
-#include "triangle.h"
+#include "star.h"
 
 #include <GL/glew.h>
 
-void Triangle::Initialize() {
+void Star::Initialize() {
     const GLfloat kVertices[] = {
-            -0.8f, -0.8f, 0.0f, 1.0f,
-            0.0f, 0.8f, 0.0f, 1.0f,
-            0.8f, -0.8f, 0.0f, 1.0f
+            0.0f, 0.0f, 0.0f, 1.0f,
+            0.0f, 0.9f, 0.0f, 1.0f,
+            0.2f, 0.3f, 0.0f, 1.0f,
+            0.9f, 0.3f, 0.0f, 1.0f,
+            0.4f, -0.1f, 0.0f, 1.0f,
+            0.6f, -0.9f, 0.0f, 1.0f,
+            0.0f, -0.4f, 0.0f, 1.0f,
+            -0.6f, -0.9f, 0.0f, 1.0f,
+            -0.4f, -0.1f, 0.0f, 1.0f,
+            -0.9f, 0.3f, 0.0f, 1.0f,
+            -0.2f, 0.3f, 0.0f, 1.0f,
+            0.0f, 0.9f, 0.0f, 1.0f
     };
 
     const GLfloat kColors[] = {
-
-            1.0f, 0.0f, 0.0f, 1.0f,
-            0.0f, 1.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, 1.0f, 1.0f
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
     };
 
 
@@ -37,7 +54,7 @@ void Triangle::Initialize() {
 
 }
 
-Triangle::~Triangle() {
+Star::~Star() {
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
 
@@ -50,12 +67,12 @@ Triangle::~Triangle() {
     glDeleteVertexArrays(1, &vao_);
 }
 
-void Triangle::Draw(const Program &program) {
+void Star::Draw(const Program &program) {
 
     glUseProgram(program);
     glBindVertexArray(vao_);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 12);
 
     glBindVertexArray(0);
     glUseProgram(0);

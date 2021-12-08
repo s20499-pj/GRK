@@ -1,14 +1,18 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#ifndef CIRCLE_H
+#define CIRCLE_H
 
 #include <GL/glew.h>
 #include "program.h"
 
-class Triangle {
+class Circle {
 public:
     void Initialize();
 
-    ~Triangle();
+    void FindPixels(int r);
+
+    void write_pixel(int x, int y, int offset);
+
+    ~Circle();
 
     void Draw(const Program &program);
 
@@ -18,4 +22,4 @@ private:
     GLuint color_buffer_;
 };
 
-#endif
+#endif // CIRCLE_H

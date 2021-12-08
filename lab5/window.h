@@ -6,6 +6,10 @@
 #include <GLFW/glfw3.h>
 
 #include "triangle.h"
+#include "star.h"
+#include "outline_star.h"
+#include "circle.h"
+#include "outline_circle.h"
 #include "program.h"
 
 class Window{
@@ -16,6 +20,8 @@ class Window{
     void KeyEvent(int key, int scancode, int action, int mods);
     void Run(void);
     operator GLFWwindow*(){return window_;}
+    int GetWidth();
+    int GetHeight();
  private:
     int width_;
     int height_;
@@ -23,6 +29,10 @@ class Window{
     GLFWwindow* window_;
 
     Triangle triangle_;
+    Star star_;
+    OutlineStar outline_star_;
+    Circle circle_;
+    OutlineCircle outline_circle_;
 
     Program program_;
 

@@ -1,14 +1,14 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#ifndef OUTLINE_START_H
+#define OUTLINE_START_H
 
 #include <GL/glew.h>
 #include "program.h"
 
-class Triangle {
+class OutlineStar {
 public:
     void Initialize();
 
-    ~Triangle();
+    ~OutlineStar();
 
     void Draw(const Program &program);
 
@@ -18,4 +18,4 @@ private:
     GLuint color_buffer_;
 };
 
-#endif
+#endif // OUTLINE_START_H

@@ -1,14 +1,14 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#ifndef STAR_H
+#define STAR_H
 
 #include <GL/glew.h>
 #include "program.h"
 
-class Triangle {
+class Star {
 public:
     void Initialize();
 
-    ~Triangle();
+    ~Star();
 
     void Draw(const Program &program);
 
@@ -18,4 +18,4 @@ private:
     GLuint color_buffer_;
 };
 
-#endif
+#endif // STAR_H

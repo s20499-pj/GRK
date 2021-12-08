@@ -8,19 +8,20 @@
 
 #include "glerror.h"
 
-Window::Window(const char * title, int width, int height){
+Window::Window(const char *title, int width, int height) {
     title_ = title;
     width_ = width;
     height_ = height;
 }
 
-void Window::Initialize(int major_gl_version, int minor_gl_version){
+void Window::Initialize(int major_gl_version, int minor_gl_version) {
 
     InitGlfwOrDie(major_gl_version, minor_gl_version);
     InitGlewOrDie();
 
 
-    std::cout << "OpenGL initialized: OpenGL version: " << glGetString(GL_VERSION) << " GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    std::cout << "OpenGL initialized: OpenGL version: " << glGetString(GL_VERSION) << " GLSL version: "
+              << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
     InitModels();
     InitPrograms();
@@ -29,8 +30,8 @@ void Window::Initialize(int major_gl_version, int minor_gl_version){
 
 }
 
-void Window::InitGlfwOrDie(int major_gl_version, int minor_gl_version){
-    if ( !glfwInit() ) {
+void Window::InitGlfwOrDie(int major_gl_version, int minor_gl_version) {
+    if (!glfwInit()) {
         std::cerr << "ERROR: Could not initialize GLFW" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -42,7 +43,7 @@ void Window::InitGlfwOrDie(int major_gl_version, int minor_gl_version){
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 #endif
     window_ = glfwCreateWindow(width_, height_, title_, nullptr, nullptr);
-    if (!window_){
+    if (!window_) {
         std::cerr << "ERROR: Could not create a new rendering window" << std::endl;
         glfwTerminate();
         exit(EXIT_FAILURE);
@@ -50,7 +51,7 @@ void Window::InitGlfwOrDie(int major_gl_version, int minor_gl_version){
     glfwMakeContextCurrent(window_);
 }
 
-void Window::InitGlewOrDie(){
+void Window::InitGlewOrDie() {
     GLenum glew_init_result;
     glewExperimental = GL_TRUE;
     glew_init_result = glewInit();
@@ -79,38 +80,63 @@ void Window::InitGlewOrDie(){
 
 }
 
-void Window::InitModels(){
+void Window::InitModels() {
     triangle_.Initialize();
+    star_.Initialize();
+    outline_star_.Initialize();
+    circle_.Initialize();
+    outline_circle_.Initialize();
 }
 
-void Window::InitPrograms(){
+void Window::InitPrograms() {
     program_.Initialize();
 }
 
-void Window::Resize(int new_width, int new_height){
+void Window::Resize(int new_width, int new_height) {
     width_ = new_width;
     height_ = new_height;
     glViewport(0, 0, width_, height_);
 }
 
-void Window::KeyEvent(int key, int /*scancode*/, int action, int /*mods*/){
-    if(action == GLFW_RELEASE){
-        switch (key){
+int switchModel = 0;
+
+void Window::KeyEvent(int key, int /*scancode*/, int action, int /*mods*/) {
+    if (action == GLFW_RELEASE) {
+        switch (key) {
             case GLFW_KEY_ESCAPE:
                 glfwSetWindowShouldClose(window_, GLFW_TRUE);
-            break;
+                break;
+            case GLFW_KEY_SPACE:
+                switchModel++;
+                break;
             default:
-            break;
+                break;
         }
     }
 }
 
-void Window::Run(void){
-    while (!glfwWindowShouldClose(window_)){
+void Window::Run(void) {
+    while (!glfwWindowShouldClose(window_)) {
         glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);
-        triangle_.Draw(program_);
+        //triangle_.Draw(program_);
+        switch (switchModel % 4) {
+            case 0:
+                star_.Draw(program_);
+                break;
+            case 1:
+                outline_star_.Draw(program_);
+                break;
+            case 2:
+                circle_.Draw(program_);
+                break;
+            case 3:
+                outline_circle_.Draw(program_);
+                break;
+        }
         glfwSwapBuffers(window_);
         glfwWaitEvents();
     }
-
 }
+
+int Window::GetWidth() {return width_;}
+int Window::GetHeight() {return height_;}

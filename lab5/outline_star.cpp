@@ -1,30 +1,45 @@
-#include "triangle.h"
-
 #include <GL/glew.h>
+#include "outline_star.h"
 
-void Triangle::Initialize() {
+void OutlineStar::Initialize() {
+
     const GLfloat kVertices[] = {
-            -0.8f, -0.8f, 0.0f, 1.0f,
-            0.0f, 0.8f, 0.0f, 1.0f,
-            0.8f, -0.8f, 0.0f, 1.0f
+            0.0f, 0.9f, 0.0f, 1.0f,
+            0.2f, 0.3f, 0.0f, 1.0f,
+            0.9f, 0.3f, 0.0f, 1.0f,
+            0.4f, -0.1f, 0.0f, 1.0f,
+            0.6f, -0.9f, 0.0f, 1.0f,
+            0.0f, -0.4f, 0.0f, 1.0f,
+            -0.6f, -0.9f, 0.0f, 1.0f,
+            -0.4f, -0.1f, 0.0f, 1.0f,
+            -0.9f, 0.3f, 0.0f, 1.0f,
+            -0.2f, 0.3f, 0.0f, 1.0f,
+            0.0f, 0.9f, 0.0f, 1.0f
     };
 
     const GLfloat kColors[] = {
-
-            1.0f, 0.0f, 0.0f, 1.0f,
-            0.0f, 1.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, 1.0f, 1.0f
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 1.0f,
     };
-
 
     glGenVertexArrays(1, &vao_);
     glBindVertexArray(vao_);
 
     glGenBuffers(1, &vertex_buffer_);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+
+    glEnableVertexAttribArray(0);
     glBufferData(GL_ARRAY_BUFFER, sizeof(kVertices), kVertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
-    glEnableVertexAttribArray(0);
 
     glGenBuffers(1, &color_buffer_);
     glBindBuffer(GL_ARRAY_BUFFER, color_buffer_);
@@ -37,7 +52,7 @@ void Triangle::Initialize() {
 
 }
 
-Triangle::~Triangle() {
+OutlineStar::~OutlineStar() {
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
 
@@ -50,12 +65,13 @@ Triangle::~Triangle() {
     glDeleteVertexArrays(1, &vao_);
 }
 
-void Triangle::Draw(const Program &program) {
+void OutlineStar::Draw(const Program &program) {
 
     glUseProgram(program);
     glBindVertexArray(vao_);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glLineWidth(2.0F);
+    glDrawArrays(GL_LINE_STRIP, 0, 11);
 
     glBindVertexArray(0);
     glUseProgram(0);
