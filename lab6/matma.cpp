@@ -116,6 +116,20 @@ Mat4 Mat4::CreatePerspectiveProjectionMatrix(
     return out;
 }
 
+Mat4 Mat4::CreateOrtoProjectionMatrix(float l, float r, float b, float t, float n, float f) {
+    Mat4 out(0);
+
+    out.matrix_[0] = 2/(r-l);
+    out.matrix_[5] = 2/(t-b);
+    out.matrix_[10] = -2/(f-n);
+    out.matrix_[12] = -(r+l)/(r-l);
+    out.matrix_[13] = -(t+b)/(t-b);
+    out.matrix_[14] = -(f+n)/(f-n);
+    out.matrix_[15] = 1;
+
+    return out;
+}
+
 Mat4::Mat4(float val){
     for(int i=0; i<16; i++){
         matrix_[i]=val;

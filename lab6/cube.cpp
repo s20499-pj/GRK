@@ -21,7 +21,21 @@ void Cube::Move(float delta_t){
     model_matrix_.RotateAboutY(angle_);
 }
 
+void Cube::Left() {
+    model_matrix_.RotateAboutY(-2);
+}
 
+void Cube::Right() {
+    model_matrix_.RotateAboutY(2);
+}
+
+void Cube::Up() {
+    model_matrix_.RotateAboutX(-2);
+}
+
+void Cube::Down() {
+    model_matrix_.RotateAboutX(2);
+}
 
 void Cube::SpeedUp(){
     velocity_ *= 1.09544511501;
@@ -36,27 +50,45 @@ void Cube::ToggleAnimated(){
 }
 
 void Cube::Initialize(){
-    const ColorVertex kVertices[8] =
-    {
-        { { -.5f, -.5f,  .5f, 1.0f }, { 1, 1, 1, 1 } },
-        { { -.5f,  .5f,  .5f, 1.0f }, { 1, 0, 0, 1 } },
-        { {  .5f,  .5f,  .5f, 1.0f }, { 0, 1, 0, 1 } },
-        { {  .5f, -.5f,  .5f, 1.0f }, { 1, 1, 0, 1 } },
-        { { -.5f, -.5f, -.5f, 1.0f }, { 0, 0, 1, 1 } },
-        { { -.5f,  .5f, -.5f, 1.0f }, { 1, 0, 0, 1 } },
-        { {  .5f,  .5f, -.5f, 1.0f }, { 1, 0, 1, 1 } },
-        { {  .5f, -.5f, -.5f, 1.0f }, { 0, 0, 0, 1 } }
-    };
+    const ColorVertex kVertices[12] =
+            {
+                    {{-.5f, 0.f,  -.5f, 1.0f}, {1, 0, 0, 1}},
+                    {{0.f,  .5f,  -.5f, 1.0f}, {0, 1, 0, 1}},
+                    {{.5f,  0.f,  -.5f, 1.0f}, {0, 0, 1, 1}},
+                    {{-.5f, 0.f,  0.f,  1.0f}, {0, 0, 1, 1}},
+                    {{.5f,  0.f,  0.f,  1.0f}, {1, 0, 0, 1}},
+                    {{-.5f, 0.f,  .5f,  1.0f}, {1, 0, 0, 1}},
+                    {{0.f,  -.5f, .5f,  1.0f}, {0, 1, 0, 1}},
+                    {{.5f,  0.f,  .5f,  1.0f}, {0, 0, 1, 1}},
+                    {{-.5f, -.5f, .5f,  1.0f}, {0, 1, 0, 1}},
+                    {{.5f,  -.5f, .5f,  1.0f}, {1, 0, 0, 1}},
+                    {{.5f,  -.5f, -.5f, 1.0f}, {0, 1, 0, 1}},
+                    {{-.5f, -.5f, -.5f, 1.0f}, {0, 0, 1, 1}}
+            };
 
-    const GLuint kIndices[36] =
-    {
-      0,1,2,  0,2,3,
-      4,0,3,  4,3,7,
-      4,5,1,  4,1,0,
-      3,2,6,  3,6,7,
-      1,5,6,  1,6,2,
-      7,6,5,  7,5,4
-    };
+    const GLuint kIndices[60] =
+            {
+                    0, 1, 3,  //rzut z góry
+                    1, 2, 4,  //rzut z góry
+                    3, 1, 4,  //rzut z góry
+                    3, 5, 6,  //rzut z góry
+                    3, 6, 4,  //rzut z góry
+                    4, 6, 7,  //rzut z góry
+                    4, 7, 9, //rzut z prawej
+                    4, 9, 10,//rzut z prawej
+                    4, 2, 10, //rzut z prawej
+                    3, 5, 8,  //rzut z lewej
+                    3, 8, 11, //rzut z lewej
+                    3, 0, 11, //rzut z lewej
+                    6, 8, 11, //rzut z dołu
+                    6, 10, 11,//rzut z dołu
+                    6, 10, 9, //rzut z dołu
+                    0, 1, 2,  //rzut z tyłu
+                    0, 2, 10, //rzut z tyłu
+                    0, 10, 11,//rzut z tyłu
+                    5, 6, 8,  //rzut z przodu
+                    7, 6, 9  //rzut z przodu*/
+            };
 
 
     glGenVertexArrays(1, &vao_);
@@ -88,7 +120,7 @@ void Cube::Draw(const ModelProgram &program) const{
 
     program.SetModelMatrix(model_matrix_);
 
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 60, GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
     glUseProgram(0);

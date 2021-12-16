@@ -19,10 +19,14 @@ class Cube: public IndexModel, public MovableModel{
     void SpeedUp();
     void SlowDown();
     void ToggleAnimated();
- private:
+    void Left();
+    void Right();
+    void Up();
+    void Down();
+private:
     float angle_;
     float velocity_;
     bool animated_;
 };
 
-#endif // CUBE_H
+#endif // KDRON_H

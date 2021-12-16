@@ -117,7 +117,7 @@ void Window::SetProjectionMatrix() const{
 void Window::Resize(int new_width, int new_height){
     width_ = new_width;
     height_ = new_height;
-    projection_matrix_ = Mat4::CreatePerspectiveProjectionMatrix(60, (float)width_/(float)height_, 0.1f, 100.0f);
+    //projection_matrix_ = Mat4::CreatePerspectiveProjectionMatrix(60, (float)width_/(float)height_, 0.1f, 100.0f);
     SetProjectionMatrix();
     glViewport(0, 0, width_, height_);
 }
@@ -128,12 +128,40 @@ void Window::KeyEvent(int key, int /*scancode*/, int action, int /*mods*/){
             case GLFW_KEY_ESCAPE:
                 glfwSetWindowShouldClose(window_, GLFW_TRUE);
             break;
-            case GLFW_KEY_LEFT:
+            case GLFW_KEY_S:
               cube_.SlowDown();
             break;
-            case GLFW_KEY_RIGHT:
+            case GLFW_KEY_F:
               cube_.SpeedUp();
             break;
+            case GLFW_KEY_LEFT:
+                cube_.Left();
+                break;
+            case GLFW_KEY_RIGHT:
+                cube_.Right();
+                break;
+            case GLFW_KEY_UP:
+                cube_.Up();
+                break;
+            case GLFW_KEY_DOWN:
+                cube_.Down();
+                break;
+            case GLFW_KEY_PAGE_UP:
+                view_matrix_.Translate(0,0,0.02);
+                view_matrix_.Scale(1.02,1.02,1.02);
+                break;
+            case GLFW_KEY_PAGE_DOWN:
+                view_matrix_.Translate(0,0,-0.02);
+                view_matrix_.Scale(0.98,0.98,0.98);
+                SetViewMatrix();
+                break;
+            case GLFW_KEY_HOME:
+                projection_matrix_ = Mat4::CreatePerspectiveProjectionMatrix(60, (float) width_ / (float) height_, 0.1, 100);
+                SetProjectionMatrix();
+                break;
+            case GLFW_KEY_END:
+                projection_matrix_ = Mat4::CreateOrtoProjectionMatrix(-1.6, 1.6,-1.2,1.2,-100,100);
+                SetProjectionMatrix();
             case GLFW_KEY_SPACE:
               cube_.ToggleAnimated();
             break;
@@ -143,12 +171,34 @@ void Window::KeyEvent(int key, int /*scancode*/, int action, int /*mods*/){
     }
     else if(action == GLFW_REPEAT){
         switch (key){
-            case GLFW_KEY_LEFT:
+            case GLFW_KEY_S:
               cube_.SlowDown();
             break;
-            case GLFW_KEY_RIGHT:
+            case GLFW_KEY_F:
               cube_.SpeedUp();
             break;
+            case GLFW_KEY_LEFT:
+                cube_.Left();
+                break;
+            case GLFW_KEY_RIGHT:
+                cube_.Right();
+                break;
+            case GLFW_KEY_UP:
+                cube_.Up();
+                break;
+            case GLFW_KEY_DOWN:
+                cube_.Down();
+                break;
+            case GLFW_KEY_PAGE_UP:
+                view_matrix_.Translate(0,0,0.02);
+                view_matrix_.Scale(1.02,1.02,1.02);
+                SetViewMatrix();
+                break;
+            case GLFW_KEY_PAGE_DOWN:
+                view_matrix_.Translate(0,0,-0.02);
+                view_matrix_.Scale(0.98,0.98,0.98);
+                SetViewMatrix();
+                break;
             default:
             break;
         }
@@ -158,10 +208,10 @@ void Window::KeyEvent(int key, int /*scancode*/, int action, int /*mods*/){
 void Window::Run(void){
     while (!glfwWindowShouldClose(window_)){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        clock_t now = clock();
-        if (last_time_ == 0) last_time_ = now;
-        cube_.Move((float)(now - last_time_) / CLOCKS_PER_SEC);
-        last_time_ = now;
+//        clock_t now = clock();
+//        if (last_time_ == 0) last_time_ = now;
+//        cube_.Move((float)(now - last_time_) / CLOCKS_PER_SEC);
+//        last_time_ = now;
 
         cube_.Draw(program_);
         glfwSwapBuffers(window_);
